@@ -11,75 +11,7 @@
 # If the power of the term is 0, only the coefficient should be included. If the power of the term is 1,
 # the caret and power should be excluded.
 import math
-# import sympy
-# def expand(expr):
-
-#!C:/Python34/python.exe
-
-import sys, re
-from math import pow
-
-def factorial(n):
-    if n <= 1:
-        return 1
-    return n * factorial(n - 1)
-
-def nCr(n, r):
-    return factorial(n) / (factorial(r) * factorial(n - r))
-
-def pascal(row, num):
-    return nCr(row, num - 1)
-
-def pascal_for_row(row):
-    row_nums = list()
-    for i in range(1, row + 2):
-        row_nums.append(pascal(row, i))
-
-    return row_nums
-
-
-BINOMIAL_REGEX = "\\((?:(\\d+)([a-zA-Z])(?:\\^(\\d+)?)?)(\\+|\\-)(?:(\\d+)([a-zA-Z])(?:\\^(\\d+)?)?)\\)(?:\\^(\\d+))"
-
-binomial = input("Enter a binomial to expand: ").replace(" ", "")
-match = re.search(BINOMIAL_REGEX, binomial)
-
-if match is None:
-    print("Invalid Binomial.")
-    sys.exit(0)
-
-first_coeff = int(match.group(1))
-first_var = match.group(2)
-first_exp = int(match.group(3) if match.group(3) else 1)
-
-add = match.group(4) == '+'
-
-second_coeff = int(match.group(5))
-second_var = match.group(6)
-second_exp = int(match.group(7) if match.group(7) else 1)
-
-power = int(match.group(8))
-
-pascal_row = pascal_for_row(power)
-expanded = ""
-
-for i in range(0, len(pascal_row)):
-    if i is len(pascal_row) - 1:
-        expanded += str(int(pow(second_coeff, i)) * pascal_row[i]) + str(second_var) + "^" + str(i) + " "
-    elif i is 0:
-        expanded += str(int(pow(first_coeff, power - i)) * pascal_row[i]) + str(first_var) + "^" + str(power - i) + " "
-    else:
-        expanded += str(int(pow(first_coeff, power - i)) * int(pow(second_coeff, i)) * pascal_row[i]) + str(first_var)
-        if power - i is not 1:
-            expanded += "^" + str(power - i) + "*"
-
-        expanded += str(second_var) + " "
-        if i is not 1:
-            expanded += "^" + str(i) + " "
-
-        if i is not len(pascal_row) - 1:
-            expanded += ("+ " if add else "- ")
-
-print(expanded)
+def expand(expr):
 
 
 # test.assert_equals(expand("(x+1)^0"), "1")

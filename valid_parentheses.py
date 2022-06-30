@@ -1,17 +1,19 @@
-ef valid_parentheses(s):
-    opening = "{[("
-    closing = "}])"
-    brackets = {')': '(', '}': '{', ']': '['}
+def question_2(s):
+    if len(s) % 2 != 0:
+        return False
+    bracket = {'(' : ')', '[' : ']', '{' : '}'}
     stack = []
+    for i in s:
+        if i in bracket.keys():
+            stack.append(i)
+        else:
+            if stack == []:
+                return False
+            a = stack.pop()
+            if i!= bracket[a]:
+                return False
+    return stack == []
 
-    for char in s:
-        if char in opening:
-            stack.append(char)
-        elif char in closing:
-            if len(stack) == 0:
-                return False
-            if stack[-1] == brackets[char]:
-                stack.pop()
-            else:
-                return False
-    return len(stack) == 0
+print(question_2("(["))
+print(question_2("([)]"))
+print(question_2("{[]}"))
